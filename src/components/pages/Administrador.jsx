@@ -2,7 +2,7 @@ import { Button, Table } from "react-bootstrap";
 import ItemReceta from "./recetas/ItemReceta";
 
 
-const Administrador = () => {
+const Administrador = ({ recetas, setRecetas }) => {
     return (
        <section className="container mainSection">
       <div className="d-flex justify-content-between align-items-center mt-5">
@@ -11,9 +11,7 @@ const Administrador = () => {
           <Button className="btn btn-primary">
             <i className="bi bi-file-earmark-plus"></i>
           </Button>
-          <Button className="btn btn-info ms-2 text-light" >
-            <i className="bi bi-database-fill-add "></i>
-          </Button>
+        
         </div>
       </div>
       <hr />
@@ -27,7 +25,11 @@ const Administrador = () => {
             <th>Opciones</th>
           </tr>
         </thead>
-        <tbody>
+         <tbody>
+          {
+            recetas.map((receta, indice)=> <ItemProducto key={receta.id} producto={receta} fila={indice+1}/>
+)
+          }
          
         </tbody>
       </Table>

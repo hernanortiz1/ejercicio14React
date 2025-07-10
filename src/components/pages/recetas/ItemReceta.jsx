@@ -1,19 +1,19 @@
 import { Button } from "react-bootstrap";
 
-const ItemReceta = () => {
+const ItemReceta = ({receta, fila}) => {
   return (
     <tr>
-      <td className="text-center">{/* fila */} </td> 
+      <td className="text-center">{fila} </td> 
       
-      <td> {/* nombreReceta */}</td>
+      <td> {receta.nombreReceta}</td>
       <td className="text-center">
         <img
-          src= ""//imagen 
+          src= {receta.imagen}//imagen 
           className="img-thumbnail"
-          alt= "" //nombreReceta
+          alt= {receta.nombreReceta} //nombreReceta
         ></img>
       </td>
-      <td>{/* categoria */}</td>
+      <td>{receta.categoria}</td>
       <td className="text-center">
         <Button variant="warning" className="me-lg-2">
           <i className="bi bi-pencil-square"></i>
