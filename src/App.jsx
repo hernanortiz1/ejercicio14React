@@ -34,7 +34,7 @@ function App() {
         ></Menu>
         <main>
           <Routes>
-            <Route path="/" element={<Inicio />}></Route>
+            <Route path="/" element={<Inicio recetas={recetas} />}></Route>
 
             <Route
               path="/login"

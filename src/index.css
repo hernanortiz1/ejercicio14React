@@ -28,8 +28,9 @@ main {
   background: #003c25;
 }
 .card {
-  width: var(--max);
+  max-width: 100%;
 }
+
 
 .card-img-top-nueva {
   width: 100%;
