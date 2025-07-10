@@ -31,7 +31,7 @@ const Login = ({ setUsuarioAdmin }) => {
       <h1 className="text-center">Login</h1>
       <Row xs={1} md={2}>
         <Col>
-          <Form>
+          <Form onSubmit={handleSubmit(iniciarSesion)}>
             <Form.Group className="mb-3" controlId="email">
               <Form.Label>Email</Form.Label>
               <Form.Control
