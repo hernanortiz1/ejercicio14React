@@ -1,18 +1,39 @@
 import { Button, Table } from "react-bootstrap";
 import ItemReceta from "./recetas/ItemReceta";
+import { useNavigate } from "react-router";
+import Swal from "sweetalert2";
+import { useState, useEffect } from "react";
 
+const Administrador = ({ recetas, setRecetas }) => {
+  const navigate = useNavigate();
 
-const Administrador = () => {
-    return (
-       <section className="container mainSection">
+  const irACrearReceta = () => {
+    navigate("/administrador/crear");
+  };
+
+  const eliminarReceta = (id) => {
+    Swal.fire({
+      title: "¿Estás seguro de eliminar esta receta?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const recetasFiltradas = recetas.filter((receta) => receta.id !== id);
+        setRecetas(recetasFiltradas);
+        Swal.fire("Eliminada", "La receta ha sido eliminada.", "success");
+      }
+    });
+  };
+
+  return (
+    <section className="container mainSection">
       <div className="d-flex justify-content-between align-items-center mt-5">
         <h1 className="display-4 ">Recetas disponibles</h1>
         <div>
-          <Button className="btn btn-primary">
-            <i className="bi bi-file-earmark-plus"></i>
-          </Button>
-          <Button className="btn btn-info ms-2 text-light" >
-            <i className="bi bi-database-fill-add "></i>
+          <Button className="btn btn-primary" onClick={irACrearReceta}>
+            <i className="bi bi-file-earmark-plus"> Crear</i>
           </Button>
         </div>
       </div>
@@ -28,11 +49,13 @@ const Administrador = () => {
           </tr>
         </thead>
         <tbody>
-         
+          {recetas.map((receta, indice) => (
+            <ItemReceta key={receta.id} receta={receta} fila={indice + 1} eliminarReceta={eliminarReceta}/>
+          ))}
         </tbody>
       </Table>
     </section>
-    );
+  );
 };
 
 export default Administrador;

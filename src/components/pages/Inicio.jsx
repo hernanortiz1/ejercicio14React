@@ -1,7 +1,7 @@
 import { Container, Row } from "react-bootstrap";
 import CardReceta from "./recetas/CardReceta";
 
-const Inicio = () => {
+const Inicio = ({ recetas }) => {
   return (
     <section className="mainSection">
       <img
@@ -13,7 +13,13 @@ const Inicio = () => {
         <h1 className="display-4">Nuestras recetas</h1>
         <hr />
         <Row>
-          <CardReceta></CardReceta>
+          {recetas.length === 0 ? (
+            <p>No hay recetas para mostrar.</p>
+          ) : (
+            recetas.map((receta, index) => (
+              <CardReceta key={index} receta={receta} />
+            ))
+          )}
         </Row>
       </Container>
     </section>

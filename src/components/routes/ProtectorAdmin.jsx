@@ -1,10 +1,12 @@
+import { Navigate, Outlet } from "react-router";
 
+const ProtectorAdmin = ({isAdmin}) => {
+     if(!isAdmin){
+        return <Navigate to={"/"}></Navigate>
+    }
 
-const ProtectorAdmin = () => {
     return (
-        <div>
-            
-        </div>
+        <Outlet />
     );
 };
 

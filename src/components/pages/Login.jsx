@@ -2,13 +2,36 @@ import { Row, Col, Form, Button } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 
-const Login = () => {
+const Login = ({ setUsuarioAdmin }) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const navegacion = useNavigate();
+
+  const iniciarSesion = (usuario) => {
+    console.log(usuario);
+    if (
+      usuario.email === import.meta.env.VITE_API_EMAIL &&
+      usuario.password === import.meta.env.VITE_API_PASSWORD
+    ) {
+      //soy el administrador
+      console.log("Soy el administrador");
+      setUsuarioAdmin(true);
+      sessionStorage.setItem("userKeyReceta", true);
+      navegacion("/administrador");
+    } else {
+      console.log("Email o contraseña incorrecto.");
+    }
+  };
+
   return (
     <section className="container my-3">
       <h1 className="text-center">Login</h1>
       <Row xs={1} md={2}>
         <Col>
-          <Form >
+          <Form onSubmit={handleSubmit(iniciarSesion)}>
             <Form.Group className="mb-3" controlId="email">
               <Form.Label>Email</Form.Label>
               <Form.Control

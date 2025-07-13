@@ -1,7 +1,15 @@
 import { Navbar, Container, Nav, Button } from "react-bootstrap";
 import { NavLink, Link, useNavigate } from "react-router";
 
-const Menu = () => {
+const Menu = ({ usuarioAdmin, setUsuarioAdmin }) => {
+  const navegacion = useNavigate();
+  const logout = () => {
+    setUsuarioAdmin(false);
+
+    sessionStorage.removeItem("userKeyReceta");
+
+    navegacion("/");
+  };
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
@@ -14,6 +22,22 @@ const Menu = () => {
             <NavLink className="nav-link" to={"/"}>
               Inicio
             </NavLink>
+            {usuarioAdmin ? (
+              <>
+                {/* si el usuario es admin renderiza el componente admin y un btn logout */}
+                <NavLink className="nav-link" to={"/administrador"}>
+                  Administrador
+                </NavLink>
+                <Button className="nav-link" onClick={logout}>
+                  Logout
+                </Button>
+              </>
+            ) : (
+  
+              <NavLink className="nav-link" to={"/login"}>
+                Login
+              </NavLink>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Container>
