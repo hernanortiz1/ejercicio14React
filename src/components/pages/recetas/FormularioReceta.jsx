@@ -32,8 +32,6 @@ const FormularioReceta = () => {
   });
 
   useEffect(() => {
-    console.log("desde use effect");
-
     localStorage.setItem("listaRecetas", JSON.stringify(recetas));
   }, [recetas]);
 
@@ -81,9 +79,9 @@ const FormularioReceta = () => {
         <Form.Group className="mb-3" controlId="formNombreReceta">
           <Form.Label>Receta*</Form.Label>
           <Form.Control
+            required
             type="text"
             placeholder="Ej: Receta de..."
-            onChange={(e) => setReceta(e.target.value)}
             {...register("nombreReceta", {
               required: "El titulo de la receta es un dato obligatorio",
               minLength: {
@@ -98,28 +96,47 @@ const FormularioReceta = () => {
               },
             })}
           />
-          <Form.Text className="text-danger"></Form.Text>
+          <Form.Text className="text-danger">
+            {errors.nombreReceta?.message}
+          </Form.Text>
         </Form.Group>
         <Form.Group className="mb-3" controlId="formImagen">
           <Form.Label>Imagen URL*</Form.Label>
           <Form.Control
             type="text"
             placeholder="Ej: https://images.pexels.com/photos/1470166/pexels-photo-1470166.jpeg"
+            {...register("imagen", {
+              required: "La URL de imagen es obligatoria",
+              pattern: {
+                value:
+                  /^https?:\/\/[\w\-]+(\.[\w\-]+)+[/#?]?.*\.(jpg|jpeg|png)$/,
+                message: "Debe ser una URL válida de imagen (jpg, png, etc.)",
+              },
+            })}
           />
-          <Form.Text className="text-danger"></Form.Text>
+          <Form.Text className="text-danger">
+            {errors.imagen?.message}
+          </Form.Text>
         </Form.Group>
         <Form.Group className="mb-3" controlId="formPrecio">
           <Form.Label>Categoría*</Form.Label>
-          <Form.Select>
+          <Form.Select
+            required
+            {...register("categoria", {
+              required: "La categoria es un dato obligatorio",
+            })}
+          >
             <option value="" hidden>
               Seleccione una opcion
             </option>
-            <option value="Infusiones">Desayunos</option>
-            <option value="Batidos">Platos principales</option>
-            <option value="dulce">Postres</option>
-            <option value="salado">Bebidas</option>
+            <option value="Desayunos">Desayunos</option>
+            <option value="Platos_principales">Platos principales</option>
+            <option value="Postres">Postres</option>
+            <option value="Bebidas">Bebidas</option>
           </Form.Select>
-          <Form.Text className="text-danger"></Form.Text>
+          <Form.Text className="text-danger">
+            {errors.categoria?.message}
+          </Form.Text>
         </Form.Group>
         <Form.Group className="mb-3" controlId="formImagen">
           <Form.Label>Descripción breve*</Form.Label>
@@ -127,8 +144,22 @@ const FormularioReceta = () => {
             type="text"
             placeholder="Ej: Describe brevemente la receta, sus ingredientes y el sabor"
             as="textarea"
+            required
+            {...register("descripcionBreve", {
+              required: "La descripción  es un dato obligatorio",
+              minLength: {
+                value: 3,
+                message: "La descripción debe tener 3 caracteres como minimo ",
+              },
+              maxLength: {
+                value: 100,
+                message: "La descripción debe tener 100 caracteres como máximo",
+              },
+            })}
           />
-          <Form.Text className="text-danger"></Form.Text>
+          <Form.Text className="text-danger">
+            {errors.descripcionBreve?.message}
+          </Form.Text>
         </Form.Group>
         <Form.Group className="mb-3" controlId="formImagen">
           <Form.Label>Descripción Amplia*</Form.Label>
@@ -137,8 +168,22 @@ const FormularioReceta = () => {
             placeholder="Ej: Una receta deliciosa y fácil de preparar, ideal para compartir en familia o con amigos. Incluye ingredientes accesibles y pasos sencillos para lograr un plato sabroso y casero."
             as="textarea"
             rows={4}
+            required
+            {...register("descripcionAmplia", {
+              required: "La descripción  es un dato obligatorio",
+              minLength: {
+                value: 10,
+                message: "La descripción debe tener 10 caracteres como minimo ",
+              },
+              maxLength: {
+                value: 200,
+                message: "La descripción debe tener 200 caracteres como máximo",
+              },
+            })}
           />
-          <Form.Text className="text-danger"></Form.Text>
+          <Form.Text className="text-danger">
+            {errors.descripcionAmplia?.message}
+          </Form.Text>
         </Form.Group>
 
         <Button type="submit" variant="success">
