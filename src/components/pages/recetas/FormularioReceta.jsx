@@ -1,20 +1,16 @@
 import { useState, useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 
-const FormularioReceta = () => {
+const FormularioReceta = ({ recetas, setRecetas }) => {
   const navigate = useNavigate();
-  const recetasLocalStorage =
-    JSON.parse(localStorage.getItem("catalogoRecetas")) || [];
-
-  const [recetas, setRecetas] = useState(recetasLocalStorage);
+  const { id } = useParams();
 
   const volverAdministrador = () => {
     navigate("/administrador");
   };
-
   const {
     register,
     handleSubmit,
@@ -31,49 +27,46 @@ const FormularioReceta = () => {
   });
 
   useEffect(() => {
-    localStorage.setItem("catalogoRecetas", JSON.stringify(recetas));
-  }, [recetas]);
-
-  const agregarRecetas = (datos) => {
-    const nuevaReceta = {
-      ...datos,
-      id: crypto.randomUUID(),
-    };
-
-    Swal.fire({
-      title: "Datos guardados correctamente",
-      text: `Receta: ${datos.nombreReceta}, categoria: ${datos.categoria}`,
-      icon: "success",
-      confirmButtonText: "OK",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        Swal.fire({
-          title: "Volver al Menú principal",
-          icon: "question",
-          showCancelButton: true,
-          confirmButtonText: "Sí, volver",
-          cancelButtonText: "Quedarme aquí",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            navigate("/administrador");
-          }
-        });
+    if (id) {
+      const recetaEditar = recetas.find((receta) => receta.id === id);
+      if (recetaEditar) {
+        reset(recetaEditar);
       }
-    });
+    }
+  }, [id, recetas, reset]);
 
-    setRecetas([...recetas, nuevaReceta]);
 
-    reset();
-  };
+  const guardarReceta = (datos) => {
+    if (id) {
+      // EDITAR RECETA
+      const recetasActualizadas = recetas.map((receta) =>
+        receta.id === id ? { ...datos, id } : receta
+      );
+      setRecetas(recetasActualizadas);
 
-  const borrarReceta = (nombreReceta) => {
-    const indice = tareas.findIndex((item) => item === nombreReceta);
+      Swal.fire({
+        title: "Receta actualizada correctamente",
+        icon: "success",
+        confirmButtonText: "OK",
+      }).then(() => {
+        navigate("/administrador");
+      });
+    } else {
+      // CREAR RECETA
+      const nuevaReceta = {
+        ...datos,
+        id: crypto.randomUUID(),
+      };
+      setRecetas([...recetas, nuevaReceta]);
 
-    if (indice !== -1) {
-      const nuevasRecetas = [...recetas];
-
-      nuevasRecetas.splice(indice, 1);
-      setRecetas(nuevasRecetas);
+      Swal.fire({
+        title: "Receta creada correctamente",
+        text: `Receta: ${datos.nombreReceta}, categoría: ${datos.categoria}`,
+        icon: "success",
+        confirmButtonText: "OK",
+      }).then(() => {
+        navigate("/administrador");
+      });
     }
   };
 
@@ -81,7 +74,7 @@ const FormularioReceta = () => {
     <section className="container mainSection">
       <h1 className="display-4 mt-5">Nueva receta</h1>
       <hr />
-      <Form className="my-4" onSubmit={handleSubmit(agregarRecetas)}>
+      <Form className="my-4" onSubmit={handleSubmit(guardarReceta)}>
         <Form.Group className="mb-3" controlId="formNombreReceta">
           <Form.Label>Receta*</Form.Label>
           <Form.Control
@@ -136,7 +129,7 @@ const FormularioReceta = () => {
               Seleccione una opcion
             </option>
             <option value="Desayunos">Desayunos</option>
-            <option value="Platos_principales">Platos principales</option>
+            <option value="Platos principales">Platos principales</option>
             <option value="Postres">Postres</option>
             <option value="Bebidas">Bebidas</option>
           </Form.Select>

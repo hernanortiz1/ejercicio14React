@@ -14,12 +14,10 @@ import { useEffect, useState } from "react";
 function App() {
   const usuarioLogueado =
     JSON.parse(sessionStorage.getItem("userKeyReceta")) || false;
-
-  const recetaLocalStorage =
-    JSON.parse(localStorage.getItem("catalogoRecetas")) || [];
   const [usuarioAdmin, setUsuarioAdmin] = useState(usuarioLogueado);
-  const [recetas, setRecetas] = useState(recetaLocalStorage);
-
+  const [recetas, setRecetas] = useState(() => {
+    return JSON.parse(localStorage.getItem("catalogoRecetas")) || [];
+  });
   useEffect(() => {
     localStorage.setItem("catalogoRecetas", JSON.stringify(recetas));
   }, [recetas]);
@@ -56,11 +54,21 @@ function App() {
 
               <Route
                 path="crear"
-                element={<FormularioReceta></FormularioReceta>}
+                element={
+                  <FormularioReceta
+                    recetas={recetas}
+                    setRecetas={setRecetas}
+                  ></FormularioReceta>
+                }
               ></Route>
               <Route
-                path="editar"
-                element={<FormularioReceta></FormularioReceta>}
+                path="editar/:id"
+                element={
+                  <FormularioReceta
+                    recetas={recetas}
+                    setRecetas={setRecetas}
+                  ></FormularioReceta>
+                }
               ></Route>
             </Route>
 

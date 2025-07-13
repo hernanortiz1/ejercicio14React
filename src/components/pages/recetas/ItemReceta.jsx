@@ -22,6 +22,8 @@ const ItemReceta = ({ receta, fila, eliminarReceta }) => {
       </td>
       <td>{receta.categoria}</td>
       <td className="text-center">
+       
+        {/* BOTON EDITAR */}
         <Button
           variant="warning"
           className="me-lg-2"
@@ -29,6 +31,8 @@ const ItemReceta = ({ receta, fila, eliminarReceta }) => {
         >
           <i className="bi bi-pencil-square"></i>
         </Button>
+
+         {/* BOTON ELIMINAR */}
         <Button variant="danger" onClick={() => eliminarReceta(receta.id)}>
           <i className="bi bi-trash"></i>
         </Button>

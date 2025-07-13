@@ -6,8 +6,8 @@ const cardReceta = ({ receta }) => {
       <Card className="h-100">
         <div>
           <img
-            src="https://images.pexels.com/photos/1470166/pexels-photo-1470166.jpeg"
-            alt="Libro de recetas"
+            src={receta.imagen}
+            alt={receta.nombreReceta}
             className="card-img-top-nueva"
           />
         </div>

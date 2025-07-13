@@ -2,6 +2,7 @@ import { Button, Table } from "react-bootstrap";
 import ItemReceta from "./recetas/ItemReceta";
 import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
+import { useState, useEffect } from "react";
 
 const Administrador = ({ recetas, setRecetas }) => {
   const navigate = useNavigate();
