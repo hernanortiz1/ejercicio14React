@@ -1,17 +1,22 @@
 import { Button, Table } from "react-bootstrap";
 import ItemReceta from "./recetas/ItemReceta";
-
+import { useNavigate } from "react-router";
 
 const Administrador = ({ recetas, setRecetas }) => {
-    return (
-       <section className="container mainSection">
+ const navigate = useNavigate();
+
+  const irACrearReceta = () => {
+    navigate("/administrador/crear");
+  };
+
+  return (
+    <section className="container mainSection">
       <div className="d-flex justify-content-between align-items-center mt-5">
         <h1 className="display-4 ">Recetas disponibles</h1>
         <div>
-          <Button className="btn btn-primary">
+          <Button className="btn btn-primary" onClick={irACrearReceta}> 
             <i className="bi bi-file-earmark-plus"></i>
           </Button>
-        
         </div>
       </div>
       <hr />
@@ -25,16 +30,14 @@ const Administrador = ({ recetas, setRecetas }) => {
             <th>Opciones</th>
           </tr>
         </thead>
-         <tbody>
-          {
-            recetas.map((receta, indice)=> <ItemProducto key={receta.id} producto={receta} fila={indice+1}/>
-)
-          }
-         
+        <tbody>
+          {recetas.map((receta, indice) => (
+            <ItemProducto key={receta.id} receta={receta} fila={indice + 1} />
+          ))}
         </tbody>
       </Table>
     </section>
-    );
+  );
 };
 
 export default Administrador;
