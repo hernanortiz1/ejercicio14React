@@ -1,6 +1,41 @@
 import { Form, Button } from "react-bootstrap";
+import { useNavigate } from "react-router";
+import { useForm } from "react-hook-form";
 
 const FormularioReceta = () => {
+  const navigate = useNavigate();
+  const [receta, setReceta] = useState("");
+
+  const volverAdministrador = () => {
+    navigate("/administrador");
+  };
+
+  const recetasLocalStorage =
+    JSON.parse(localStorage.getItem("listaRecetas")) || [];
+  const [recetas, setRecetas] = useState(recetasLocalStorage);
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
+
+  useEffect(() => {
+    console.log("desde use effect");
+
+    localStorage.setItem("listaRecetas", JSON.stringify(recetas));
+  }, [recetas]);
+
+ const agregarRecetas = (datos) => {
+    
+    setRecetas([...recetas, datos.inputReceta]);
+
+    //limpiar formulario
+    reset();
+  };
+
+
   return (
     <section className="container mainSection">
       <h1 className="display-4 mt-5">Nueva receta</h1>
@@ -22,7 +57,9 @@ const FormularioReceta = () => {
         <Form.Group className="mb-3" controlId="formPrecio">
           <Form.Label>Categoría*</Form.Label>
           <Form.Select>
-            <option value="">Seleccione una opcion</option>
+            <option value="" hidden>
+              Seleccione una opcion
+            </option>
             <option value="Infusiones">Desayunos</option>
             <option value="Batidos">Platos principales</option>
             <option value="dulce">Postres</option>
@@ -52,6 +89,14 @@ const FormularioReceta = () => {
 
         <Button type="submit" variant="success">
           Guardar
+        </Button>
+        <Button
+          type="submit"
+          variant="danger"
+          className="ms-3"
+          onClick={volverAdministrador}
+        >
+          Cancelar
         </Button>
       </Form>
     </section>

@@ -15,7 +15,7 @@ const Administrador = ({ recetas, setRecetas }) => {
         <h1 className="display-4 ">Recetas disponibles</h1>
         <div>
           <Button className="btn btn-primary" onClick={irACrearReceta}> 
-            <i className="bi bi-file-earmark-plus"></i>
+            <i className="bi bi-file-earmark-plus"> Crear</i>
           </Button>
         </div>
       </div>
