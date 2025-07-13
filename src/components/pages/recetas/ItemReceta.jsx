@@ -1,24 +1,35 @@
 import { Button } from "react-bootstrap";
+import { useNavigate } from "react-router";
 
-const ItemReceta = ({receta, fila}) => {
+const ItemReceta = ({ receta, fila, eliminarReceta }) => {
+  const navigate = useNavigate();
+
+  const handleEditar = (id) => {
+    navigate(`/administrador/editar/${id}`);
+  };
+
   return (
     <tr>
-      <td className="text-center">{fila} </td> 
-      
+      <td className="text-center">{fila} </td>
+
       <td> {receta.nombreReceta}</td>
       <td className="text-center">
         <img
-          src= {receta.imagen}//imagen 
+          src={receta.imagen}
           className="img-thumbnail"
-          alt= {receta.nombreReceta} //nombreReceta
+          alt={receta.nombreReceta}
         ></img>
       </td>
       <td>{receta.categoria}</td>
       <td className="text-center">
-        <Button variant="warning" className="me-lg-2">
+        <Button
+          variant="warning"
+          className="me-lg-2"
+          onClick={() => handleEditar(receta.id)}
+        >
           <i className="bi bi-pencil-square"></i>
         </Button>
-        <Button variant="danger">
+        <Button variant="danger" onClick={() => eliminarReceta(receta.id)}>
           <i className="bi bi-trash"></i>
         </Button>
       </td>

@@ -1,12 +1,29 @@
 import { Button, Table } from "react-bootstrap";
 import ItemReceta from "./recetas/ItemReceta";
 import { useNavigate } from "react-router";
+import Swal from "sweetalert2";
 
 const Administrador = ({ recetas, setRecetas }) => {
- const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const irACrearReceta = () => {
     navigate("/administrador/crear");
+  };
+
+  const eliminarReceta = (id) => {
+    Swal.fire({
+      title: "¿Estás seguro de eliminar esta receta?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const recetasFiltradas = recetas.filter((receta) => receta.id !== id);
+        setRecetas(recetasFiltradas);
+        Swal.fire("Eliminada", "La receta ha sido eliminada.", "success");
+      }
+    });
   };
 
   return (
@@ -14,7 +31,7 @@ const Administrador = ({ recetas, setRecetas }) => {
       <div className="d-flex justify-content-between align-items-center mt-5">
         <h1 className="display-4 ">Recetas disponibles</h1>
         <div>
-          <Button className="btn btn-primary" onClick={irACrearReceta}> 
+          <Button className="btn btn-primary" onClick={irACrearReceta}>
             <i className="bi bi-file-earmark-plus"> Crear</i>
           </Button>
         </div>
@@ -32,7 +49,7 @@ const Administrador = ({ recetas, setRecetas }) => {
         </thead>
         <tbody>
           {recetas.map((receta, indice) => (
-            <ItemProducto key={receta.id} receta={receta} fila={indice + 1} />
+            <ItemReceta key={receta.id} receta={receta} fila={indice + 1} eliminarReceta={eliminarReceta}/>
           ))}
         </tbody>
       </Table>

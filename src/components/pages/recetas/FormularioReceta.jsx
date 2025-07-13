@@ -6,9 +6,8 @@ import Swal from "sweetalert2";
 
 const FormularioReceta = () => {
   const navigate = useNavigate();
-  const [receta, setReceta] = useState("");
   const recetasLocalStorage =
-    JSON.parse(localStorage.getItem("listaRecetas")) || [];
+    JSON.parse(localStorage.getItem("catalogoRecetas")) || [];
 
   const [recetas, setRecetas] = useState(recetasLocalStorage);
 
@@ -32,40 +31,47 @@ const FormularioReceta = () => {
   });
 
   useEffect(() => {
-    localStorage.setItem("listaRecetas", JSON.stringify(recetas));
+    localStorage.setItem("catalogoRecetas", JSON.stringify(recetas));
   }, [recetas]);
 
   const agregarRecetas = (datos) => {
+    const nuevaReceta = {
+      ...datos,
+      id: crypto.randomUUID(),
+    };
+
     Swal.fire({
       title: "Datos guardados correctamente",
       text: `Receta: ${datos.nombreReceta}, categoria: ${datos.categoria}`,
       icon: "success",
-      draggable: true,
+      confirmButtonText: "OK",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "Volver al Menú principal",
+          icon: "question",
+          showCancelButton: true,
+          confirmButtonText: "Sí, volver",
+          cancelButtonText: "Quedarme aquí",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            navigate("/administrador");
+          }
+        });
+      }
     });
 
-    setDatosCorrectos([...recetas, datos]);
+    setRecetas([...recetas, nuevaReceta]);
 
     reset();
   };
 
-  const borrarRecetas = (recetaEliminada) => {
-    const indice = recetas.findIndex((item) => item === recetaEliminada);
-
-    if (indice !== -1) {
-      const datosNuevos = [...recetas];
-
-      datosNuevos.splice(indice, 1);
-      setRecetas(datosNuevos);
-    }
-  };
-
   const borrarReceta = (nombreReceta) => {
     const indice = tareas.findIndex((item) => item === nombreReceta);
-    //actualizar estado tareas
+
     if (indice !== -1) {
-      //copio el array original
       const nuevasRecetas = [...recetas];
-      //elimino con splice y actualizo
+
       nuevasRecetas.splice(indice, 1);
       setRecetas(nuevasRecetas);
     }
@@ -190,7 +196,7 @@ const FormularioReceta = () => {
           Guardar
         </Button>
         <Button
-          type="submit"
+          type="button"
           variant="danger"
           className="ms-3"
           onClick={volverAdministrador}
