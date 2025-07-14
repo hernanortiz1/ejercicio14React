@@ -12,7 +12,7 @@ const Menu = ({ usuarioAdmin, setUsuarioAdmin }) => {
   //   navegacion("/");
   // };
 
-   const logout = () => {
+  const logout = () => {
     Swal.fire({
       title: "¿Cerrar sesión?",
       text: "¿Estás seguro de que deseas cerrar sesión?",
@@ -56,9 +56,14 @@ const Menu = ({ usuarioAdmin, setUsuarioAdmin }) => {
                 </Button>
               </>
             ) : (
-              <NavLink className="nav-link" to={"/login"}>
+              <Button
+                as={NavLink}
+                to="/login"
+                variant="outline-primary"
+                className={({ isActive }) => (isActive ? "active" : "")}
+              >
                 Login
-              </NavLink>
+              </Button>
             )}
           </Nav>
         </Navbar.Collapse>
