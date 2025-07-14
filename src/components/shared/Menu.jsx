@@ -28,12 +28,15 @@ const Menu = ({ usuarioAdmin, setUsuarioAdmin }) => {
                 <NavLink className="nav-link" to={"/administrador"}>
                   Administrador
                 </NavLink>
-                <Button className="nav-link" onClick={logout}>
+                <Button
+                  className="nav-link"
+                  variant="outline-danger"
+                  onClick={logout}
+                >
                   Logout
                 </Button>
               </>
             ) : (
-  
               <NavLink className="nav-link" to={"/login"}>
                 Login
               </NavLink>

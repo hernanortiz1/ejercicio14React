@@ -7,8 +7,7 @@ import Footer from "./components/shared/Footer";
 import Menu from "./components/shared/Menu";
 import ProtectorAdmin from "./components/routes/ProtectorAdmin";
 import FormularioReceta from "./components/pages/recetas/FormularioReceta";
-import CardReceta from "./components/pages/recetas/CardReceta";
-import ItemReceta from "./components/pages/recetas/ItemReceta";
+import DetalleReceta from "./components/pages/recetas/DetalleReceta";
 import { useEffect, useState } from "react";
 
 function App() {
@@ -38,6 +37,13 @@ function App() {
               path="/login"
               element={<Login setUsuarioAdmin={setUsuarioAdmin}></Login>}
             ></Route>
+            
+            {/* btn VER MAS */}
+            <Route
+              path="/detalle/:id"
+              element={<DetalleReceta recetas={recetas} />}
+            />
+
             <Route
               path="/administrador"
               element={<ProtectorAdmin isAdmin={usuarioAdmin}></ProtectorAdmin>}
