@@ -10,63 +10,79 @@ import imagen5 from "../../assets/imgCarrouselInicio/img5.jpg";
 const Inicio = ({ recetas }) => {
   return (
     <section className="mainSection">
-      <Carousel fade>
-        <Carousel.Item>
-          <img
-            src={imagen1}
-            alt="imagen de waffles con frutas"
-            className="d-block w-100"
-          />
-          <Carousel.Caption className="shadow rounded-3 text-dark fondoTextoCarousel">
-            <h3 >Waffles con frutas</h3>
-            <h5>Disfruta de un desayuno saludable y lleno de energía.</h5>
-          </Carousel.Caption>
-        </Carousel.Item>
 
-        <Carousel.Item>
-          <img
-            src={imagen2}
-            alt="imagen de ensalada"
-            className="d-block w-100"
-          />
-          <Carousel.Caption className="shadow rounded-3 text-dark fondoTextoCarousel">
-            <h3>Ensaladas frescas</h3>
-            <h5>Ideales para mantener una alimentación balanceada.</h5>
-          </Carousel.Caption>
-        </Carousel.Item>
+        <Carousel fade>
+          <Carousel.Item>
+            <img
+              src={imagen1}
+              alt="imagen de waffles con frutas"
+              className="d-block w-100 imgCarousel"
+            />
+            <Carousel.Caption className="shadow rounded-3 text-dark fondoTextoCarousel">
+              <h3 className="titulo-carousel">Waffles con frutas</h3>
+              <h5 className="d-none d-md-block">
+                Disfruta de un desayuno saludable y lleno de energía.
+              </h5>
+            </Carousel.Caption>
+          </Carousel.Item>
 
-        <Carousel.Item >
-          <img src={imagen3} alt="imagen de fideos" className="d-block w-100" />
-          <Carousel.Caption className="shadow rounded-3 text-white fondoTextoCarousel">
-            <h3>Pastas artesanales</h3>
-            <h5>Descubre sabores únicos en cada bocado.</h5>
-          </Carousel.Caption>
-        </Carousel.Item>
+          <Carousel.Item>
+            <img
+              src={imagen2}
+              alt="imagen de ensalada"
+              className="d-block w-100 imgCarousel"
+            />
+            <Carousel.Caption className="shadow rounded-3 text-dark fondoTextoCarousel">
+              <h3 className="titulo-carousel">Ensaladas frescas</h3>
+              <h5 className="d-none d-md-block">
+                Ideales para mantener una alimentación balanceada.
+              </h5>
+            </Carousel.Caption>
+          </Carousel.Item>
 
-        <Carousel.Item>
-          <img
-            src={imagen4}
-            alt="imagen de ensalada de frutas"
-            className="d-block w-100"
-          />
-          <Carousel.Caption className="shadow rounded-3 text-dark fondoTextoCarousel">
-            <h3>Ensalada de frutas</h3>
-            <h5>La opción perfecta para un postre saludable.</h5>
-          </Carousel.Caption>
-        </Carousel.Item>
+          <Carousel.Item>
+            <img
+              src={imagen3}
+              alt="imagen de fideos"
+              className="d-block w-100 imgCarousel"
+            />
+            <Carousel.Caption className="shadow rounded-3 text-white fondoTextoCarousel">
+              <h3 className="titulo-carousel">Pastas artesanales</h3>
+              <h5 className="d-none d-md-block">
+                Descubre sabores únicos en cada bocado.
+              </h5>
+            </Carousel.Caption>
+          </Carousel.Item>
 
-        <Carousel.Item>
-          <img
-            src={imagen5}
-            alt="imagen de hamburguesa con papas fritas"
-            className="d-block w-100"
-          />
-          <Carousel.Caption className="shadow rounded-3 text-white fondoTextoCarousel">
-            <h3>Hamburguesas caseras</h3>
-            <h5>Acompañadas de papas fritas crujientes.</h5>
-          </Carousel.Caption>
-        </Carousel.Item>
-      </Carousel>
+          <Carousel.Item>
+            <img
+              src={imagen4}
+              alt="imagen de ensalada de frutas"
+              className="d-block w-100 imgCarousel"
+            />
+            <Carousel.Caption className="shadow rounded-3 text-dark fondoTextoCarousel">
+              <h3 className="titulo-carousel">Ensalada de frutas</h3>
+              <h5 className="d-none d-md-block">
+                La opción perfecta para un postre saludable.
+              </h5>
+            </Carousel.Caption>
+          </Carousel.Item>
+
+          <Carousel.Item>
+            <img
+              src={imagen5}
+              alt="imagen de hamburguesa con papas fritas"
+              className="d-block w-100 imgCarousel"
+            />
+            <Carousel.Caption className="shadow rounded-3 text-white fondoTextoCarousel">
+              <h3 className="titulo-carousel">Hamburguesas caseras</h3>
+              <h5 className="d-none d-md-block">
+                Acompañadas de papas fritas crujientes.
+              </h5>
+            </Carousel.Caption>
+          </Carousel.Item>
+        </Carousel>
+
 
       <Container className="mt-5">
         <h1 className="display-4">Nuestras recetas</h1>
