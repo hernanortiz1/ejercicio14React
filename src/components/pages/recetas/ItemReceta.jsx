@@ -26,7 +26,7 @@ const ItemReceta = ({ receta, fila, eliminarReceta }) => {
         {/* BOTON EDITAR */}
         <Button
           variant="warning"
-          className="me-lg-2"
+          className="me-lg-2 mb-sm-1 mb-md-0"
           onClick={() => handleEditar(receta.id)}
         >
           <i className="bi bi-pencil-square"></i>

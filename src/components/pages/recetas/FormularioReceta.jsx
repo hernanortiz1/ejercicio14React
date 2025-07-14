@@ -35,7 +35,6 @@ const FormularioReceta = ({ recetas, setRecetas }) => {
     }
   }, [id, recetas, reset]);
 
-
   const guardarReceta = (datos) => {
     if (id) {
       // EDITAR RECETA
