@@ -43,3 +43,18 @@ main {
   height: 200px;
   object-fit: cover;
 }
+
+.fondoTextoCarousel{
+  background-color: rgba(128, 128, 128, 0.516);
+}
+
+.imgCarousel{
+  max-height: 700px;
+  object-fit: cover;
+}
+
+@media (max-width: 767px) {
+  .titulo-carousel {
+    font-size: 1.1rem;
+  }
+}
