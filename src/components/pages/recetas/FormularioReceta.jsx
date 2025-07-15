@@ -69,7 +69,7 @@ const FormularioReceta = ({ recetas, setRecetas }) => {
         if (result.isConfirmed) {
           navigate("/administrador");
         } else {
-          reset(); // Limpia el formulario para agregar otra receta
+          reset();
         }
       });
     }
