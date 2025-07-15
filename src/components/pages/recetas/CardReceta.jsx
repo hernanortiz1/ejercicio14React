@@ -29,7 +29,7 @@ const cardReceta = ({ receta }) => {
           </Card.Text>
         </Card.Body>
         <Card.Footer className="text-end">
-          <Button variant="success" className="me-2" onClick={verDetalle}>
+          <Button variant="primary" className="me-2" onClick={verDetalle}>
             Ver más
           </Button>
         </Card.Footer>

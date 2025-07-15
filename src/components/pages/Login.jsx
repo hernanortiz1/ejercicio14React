@@ -29,7 +29,7 @@ const Login = ({ setUsuarioAdmin }) => {
   return (
     <section className="container my-3">
       <h1 className="text-center">Login</h1>
-      <Row xs={1} md={2}>
+      <Row xs={1} md={2} >
         <Col>
           <Form onSubmit={handleSubmit(iniciarSesion)}>
             <Form.Group className="mb-3" controlId="email">
@@ -70,7 +70,7 @@ const Login = ({ setUsuarioAdmin }) => {
                 {errors.password?.message}
               </Form.Text>
             </Form.Group>
-            <Button variant="success" type="submit">
+            <Button variant="primary" type="submit" className="mb-5">
               Enviar
             </Button>
           </Form>
