@@ -1,5 +1,6 @@
 import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const ItemReceta = ({ receta, fila, eliminarReceta }) => {
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ const ItemReceta = ({ receta, fila, eliminarReceta }) => {
         {/* BOTON EDITAR */}
         <Button
           variant="warning"
-          className="me-lg-2 mb-sm-1 mb-md-0"
+          className="mb-2 me-md-2 mb-md-0"
           onClick={() => handleEditar(receta.id)}
         >
           <i className="bi bi-pencil-square"></i>
