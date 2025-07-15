@@ -62,9 +62,15 @@ const FormularioReceta = ({ recetas, setRecetas }) => {
         title: "Receta creada correctamente",
         text: `Receta: ${datos.nombreReceta}, categoría: ${datos.categoria}`,
         icon: "success",
-        confirmButtonText: "OK",
-      }).then(() => {
-        navigate("/administrador");
+        confirmButtonText: "Ir al administrador",
+        showCancelButton: true,
+        cancelButtonText: "Quedarme aquí",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/administrador");
+        } else {
+          reset();
+        }
       });
     }
   };

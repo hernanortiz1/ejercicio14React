@@ -9,6 +9,7 @@ import ProtectorAdmin from "./components/routes/ProtectorAdmin";
 import FormularioReceta from "./components/pages/recetas/FormularioReceta";
 import DetalleReceta from "./components/pages/recetas/DetalleReceta";
 import { useEffect, useState } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   const usuarioLogueado =
