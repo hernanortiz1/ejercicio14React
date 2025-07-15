@@ -11,7 +11,7 @@ const Inicio = ({ recetas }) => {
   return (
     <section className="mainSection">
 
-        <Carousel fade>
+        <Carousel fade interval={4000}>
           <Carousel.Item>
             <img
               src={imagen1}
