@@ -65,6 +65,7 @@ function App() {
                   <FormularioReceta
                     recetas={recetas}
                     setRecetas={setRecetas}
+                    titulo={"Crear receta"}
                   ></FormularioReceta>
                 }
               ></Route>
@@ -74,6 +75,7 @@ function App() {
                   <FormularioReceta
                     recetas={recetas}
                     setRecetas={setRecetas}
+                    titulo={"Editar receta"}
                   ></FormularioReceta>
                 }
               ></Route>

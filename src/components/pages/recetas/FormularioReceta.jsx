@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 
-const FormularioReceta = ({ recetas, setRecetas }) => {
+const FormularioReceta = ({ recetas, setRecetas, titulo }) => {
   const navigate = useNavigate();
   const { id } = useParams();
 
@@ -77,7 +77,7 @@ const FormularioReceta = ({ recetas, setRecetas }) => {
 
   return (
     <section className="container mainSection">
-      <h1 className="display-4 mt-5">Nueva receta</h1>
+      <h1 className="display-4 mt-5">{titulo}</h1>
       <hr />
       <Form className="my-4" onSubmit={handleSubmit(guardarReceta)}>
         <Form.Group className="mb-3" controlId="formNombreReceta">
