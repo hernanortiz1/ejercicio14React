@@ -1,6 +1,8 @@
 import { Row, Col, Form, Button } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
+import { login } from "../../helpers/queries.js";
+import Swal from "sweetalert2";
 
 const Login = ({ setUsuarioAdmin }) => {
   const {
@@ -10,26 +12,36 @@ const Login = ({ setUsuarioAdmin }) => {
   } = useForm();
   const navegacion = useNavigate();
 
-  const iniciarSesion = (usuario) => {
-    console.log(usuario);
-    if (
-      usuario.email === import.meta.env.VITE_API_EMAIL &&
-      usuario.password === import.meta.env.VITE_API_PASSWORD
-    ) {
-      //soy el administrador
-      console.log("Soy el administrador");
-      setUsuarioAdmin(true);
-      sessionStorage.setItem("userKeyReceta", true);
+  const iniciarSesion = async (usuario) => {
+    const respuesta = await login(usuario);
+
+    if (respuesta.status === 200) {
+      const datosUsuario = await respuesta.json();
+      
+      setUsuarioAdmin({
+        nombreUsuario: datosUsuario.nombreUsuario,
+        token: datosUsuario.token,
+      });
+
+      Swal.fire({
+        title: "inicio de sesion correcto",
+        text: `Bienvenido ${datosUsuario.nombreUsuario}`,
+        icon: "success",
+      });
       navegacion("/administrador");
     } else {
-      console.log("Email o contraseña incorrecto.");
+      Swal.fire({
+        title: "Error al iniciar sesion",
+        text: `Credenciales incorrectas`,
+        icon: "error",
+      });
     }
   };
 
   return (
     <section className="container my-3">
       <h1 className="text-center">Login</h1>
-      <Row xs={1} md={2} >
+      <Row xs={1} md={2}>
         <Col>
           <Form onSubmit={handleSubmit(iniciarSesion)}>
             <Form.Group className="mb-3" controlId="email">

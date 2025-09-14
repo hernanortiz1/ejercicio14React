@@ -18,7 +18,7 @@ const Menu = ({ usuarioAdmin, setUsuarioAdmin }) => {
     }).then((result) => {
       if (result.isConfirmed) {
         sessionStorage.removeItem("userKeyReceta");
-        setUsuarioAdmin(false);
+        setUsuarioAdmin({});
         navigate("/");
       }
     });
@@ -45,7 +45,7 @@ const Menu = ({ usuarioAdmin, setUsuarioAdmin }) => {
               Inicio
             </NavLink>
 
-            {usuarioAdmin ? (
+            {usuarioAdmin.token ? (
               <>
                 <NavLink
                   className="nav-link"

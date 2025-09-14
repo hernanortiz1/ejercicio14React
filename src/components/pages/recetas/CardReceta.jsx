@@ -1,11 +1,11 @@
 import { Col, Card, Button } from "react-bootstrap";
 import { useNavigate } from "react-router";
 
-const cardReceta = ({ receta }) => {
+const CardReceta = ({ receta }) => {
   const navigate = useNavigate();
 
   const verDetalle = () => {
-    navigate(`/detalle/${receta.id}`);
+    navigate(`/detalle/${receta._id}`);
   };
  
  
@@ -24,7 +24,7 @@ const cardReceta = ({ receta }) => {
             {receta.nombreReceta}
           </Card.Title>
           <Card.Text>
-            {receta.descripcionBreve}
+            {receta.descripcion_breve}
             <br className="mb-2" />
           </Card.Text>
         </Card.Body>
@@ -38,4 +38,4 @@ const cardReceta = ({ receta }) => {
   );
 };
 
-export default cardReceta;
+export default CardReceta;

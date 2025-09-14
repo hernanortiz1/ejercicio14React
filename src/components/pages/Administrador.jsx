@@ -1,40 +1,37 @@
 import { Button, Table } from "react-bootstrap";
 import ItemReceta from "./recetas/ItemReceta";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import { useState, useEffect } from "react";
+import { leerReceta } from "../../helpers/queries";
 
-const Administrador = ({ recetas, setRecetas }) => {
-  const navigate = useNavigate();
 
-  const irACrearReceta = () => {
-    navigate("/administrador/crear");
-  };
+const Administrador = ({ borrarReceta }) => {
+ 
+const [listaRecetas, setListaRecetas] = useState([])
 
-  const eliminarReceta = (id) => {
-    Swal.fire({
-      title: "¿Estás seguro de eliminar esta receta?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Sí, eliminar",
-      cancelButtonText: "Cancelar",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        const recetasFiltradas = recetas.filter((receta) => receta.id !== id);
-        setRecetas(recetasFiltradas);
-        Swal.fire("Eliminada", "La receta ha sido eliminada.", "success");
-      }
-    });
-  };
+useEffect(()=>{
+obtenerRecetas()
+},[])
+
+const obtenerRecetas = async ()=>{
+  const respuesta = await leerReceta()
+  if(respuesta.status === 200){
+    const datos = await respuesta.json()
+    setListaRecetas(datos)
+  }else{
+    console.info("error al buscar receta")
+  }
+}
 
   return (
     <section className="container mainSection">
       <div className="d-flex justify-content-between align-items-center mt-5">
         <h1 className="display-4 ">Recetas disponibles</h1>
         <div>
-          <Button className="btn btn-primary" onClick={irACrearReceta}>
+          <Link className="btn btn-primary" to={"/administrador/crear"}>
             <i className="bi bi-file-earmark-plus"> Crear</i>
-          </Button>
+          </Link>
         </div>
       </div>
       <hr />
@@ -49,12 +46,13 @@ const Administrador = ({ recetas, setRecetas }) => {
           </tr>
         </thead>
         <tbody>
-          {recetas.map((receta, indice) => (
+          {listaRecetas.map((receta, indice) => (
             <ItemReceta
-              key={receta.id}
+              key={receta._id}
               receta={receta}
               fila={indice + 1}
-              eliminarReceta={eliminarReceta}
+              setListaRecetas={setListaRecetas}
+              borrarReceta={borrarReceta}
             />
           ))}
         </tbody>
