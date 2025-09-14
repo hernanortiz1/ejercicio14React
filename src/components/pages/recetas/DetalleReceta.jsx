@@ -5,7 +5,7 @@ const DetalleReceta = ({ recetas }) => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const receta = recetas.find((receta) => receta.id === id);
+  const receta = recetas.find((receta) => receta._id === id);
   if (!receta) {
     return (
       <Container className="mt-5">
@@ -29,10 +29,10 @@ const DetalleReceta = ({ recetas }) => {
             <strong>Categoría:</strong> {receta.categoria}
           </Card.Text>
           <Card.Text className="fs-5 border-3 shadow p-3 rounded-3 bg-primary-subtle">
-            <strong>Descripción breve:</strong> {receta.descripcionBreve}
+            <strong>Descripción breve:</strong> {receta.descripcion_breve}
           </Card.Text>
           <Card.Text className="fs-5 border-3 shadow p-3 rounded-3 bg-primary-subtle mb-5">
-            <strong>Descripción amplia:</strong> {receta.descripcionAmplia}
+            <strong>Descripción amplia:</strong> {receta.descripcion_amplia}
           </Card.Text>
           <div className="text-center d-grid gap-2 ">
             <Button variant="primary" size="lg" onClick={() => navigate("/")}>

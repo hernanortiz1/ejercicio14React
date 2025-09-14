@@ -3,10 +3,10 @@ import { Form, Button } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
+import { crearReceta, obtenerRecetaPorID, editarReceta } from "../../../helpers/queries.js";
 
 const FormularioReceta = ({ recetas, setRecetas, titulo }) => {
   const navigate = useNavigate();
-  const { id } = useParams();
 
   const volverAdministrador = () => {
     navigate("/administrador");
@@ -16,62 +16,56 @@ const FormularioReceta = ({ recetas, setRecetas, titulo }) => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm({
-    defaultValues: {
-      nombreReceta: "",
-      imagen: "",
-      categoria: "",
-      descripcionBreve: "",
-      descripcionAmplia: "",
-    },
-  });
+    setValue
+  } = useForm();
+  const { id } = useParams();
 
   useEffect(() => {
-    if (id) {
-      const recetaEditar = recetas.find((receta) => receta.id === id);
-      if (recetaEditar) {
-        reset(recetaEditar);
+    obtenerReceta()
+  }, []);
+
+
+  const obtenerReceta = async () => {
+    if (titulo === "Editar receta") {
+     
+      const respuesta = await obtenerRecetaPorID(id);
+
+      if (respuesta.status === 200) {
+        const recetaBuscada = await respuesta.json();
+
+        setValue("nombreReceta", recetaBuscada.nombreReceta);
+        setValue("imagen", recetaBuscada.imagen);
+        setValue("categoria", recetaBuscada.categoria);
+        setValue("descripcion_breve", recetaBuscada.descripcion_breve);
+        setValue("descripcion_amplia", recetaBuscada.descripcion_amplia);
       }
     }
-  }, [id, recetas, reset]);
+  };
 
-  const guardarReceta = (datos) => {
-    if (id) {
-      // EDITAR RECETA
-      const recetasActualizadas = recetas.map((receta) =>
-        receta.id === id ? { ...datos, id } : receta
-      );
-      setRecetas(recetasActualizadas);
 
-      Swal.fire({
-        title: "Receta actualizada correctamente",
-        icon: "success",
-        confirmButtonText: "OK",
-      }).then(() => {
-        navigate("/administrador");
-      });
+const onSubmit = async (receta) => {
+    if (titulo === "Crear receta") {
+      const respuesta = await crearReceta(receta);
+
+      if (respuesta.status === 201) {
+        Swal.fire({
+          title: "Receta creada",
+          text: `La receta ${receta.nombreReceta} fue creada correctamente`,
+          icon: "success",
+        });
+        reset();
+      }
     } else {
-      // CREAR RECETA
-      const nuevaReceta = {
-        ...datos,
-        id: crypto.randomUUID(),
-      };
-      setRecetas([...recetas, nuevaReceta]);
 
-      Swal.fire({
-        title: "Receta creada correctamente",
-        text: `Receta: ${datos.nombreReceta}, categoría: ${datos.categoria}`,
-        icon: "success",
-        confirmButtonText: "Ir al administrador",
-        showCancelButton: true,
-        cancelButtonText: "Quedarme aquí",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          navigate("/administrador");
-        } else {
-          reset();
-        }
-      });
+     const respuesta = await editarReceta(receta, id)
+      if (respuesta.status === 200) {
+        Swal.fire({
+          title: "Receta editada",
+          text: `La receta ${receta.nombreReceta} fue editada correctamente`,
+          icon: "success",
+        });
+        navigate("/administrador")
+      }
     }
   };
 
@@ -79,7 +73,7 @@ const FormularioReceta = ({ recetas, setRecetas, titulo }) => {
     <section className="container mainSection">
       <h1 className="display-4 mt-5">{titulo}</h1>
       <hr />
-      <Form className="my-4" onSubmit={handleSubmit(guardarReceta)}>
+      <Form className="my-4" onSubmit={handleSubmit(onSubmit)}>
         <Form.Group className="mb-3" controlId="formNombreReceta">
           <Form.Label>Receta*</Form.Label>
           <Form.Control
@@ -149,7 +143,7 @@ const FormularioReceta = ({ recetas, setRecetas, titulo }) => {
             placeholder="Ej: Describe brevemente la receta, sus ingredientes y el sabor"
             as="textarea"
             required
-            {...register("descripcionBreve", {
+            {...register("descripcion_breve", {
               required: "La descripción  es un dato obligatorio",
               minLength: {
                 value: 3,
@@ -162,7 +156,7 @@ const FormularioReceta = ({ recetas, setRecetas, titulo }) => {
             })}
           />
           <Form.Text className="text-danger">
-            {errors.descripcionBreve?.message}
+            {errors.descripcion_breve?.message}
           </Form.Text>
         </Form.Group>
         <Form.Group className="mb-3" controlId="formImagen">
@@ -173,7 +167,7 @@ const FormularioReceta = ({ recetas, setRecetas, titulo }) => {
             as="textarea"
             rows={4}
             required
-            {...register("descripcionAmplia", {
+            {...register("descripcion_amplia", {
               required: "La descripción  es un dato obligatorio",
               minLength: {
                 value: 10,
@@ -181,12 +175,12 @@ const FormularioReceta = ({ recetas, setRecetas, titulo }) => {
               },
               maxLength: {
                 value: 500,
-                message: "La descripción debe tener 200 caracteres como máximo",
+                message: "La descripción debe tener 500 caracteres como máximo",
               },
             })}
           />
           <Form.Text className="text-danger">
-            {errors.descripcionAmplia?.message}
+            {errors.descripcion_amplia?.message}
           </Form.Text>
         </Form.Group>
 

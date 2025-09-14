@@ -1,13 +1,14 @@
 import { Container, Row, Carousel } from "react-bootstrap";
 import CardReceta from "./recetas/CardReceta";
-
 import imagen1 from "../../assets/imgCarrouselInicio/img1.jpg";
 import imagen2 from "../../assets/imgCarrouselInicio/img2.jpg";
 import imagen3 from "../../assets/imgCarrouselInicio/img3.jpg";
 import imagen4 from "../../assets/imgCarrouselInicio/img4.jpg";
 import imagen5 from "../../assets/imgCarrouselInicio/img5.jpg";
+import { useState, useEffect } from "react";
+import { leerReceta } from "../../helpers/queries.js";
 
-const Inicio = ({ recetas }) => {
+const Inicio = () => {
   return (
     <section className="mainSection">
 

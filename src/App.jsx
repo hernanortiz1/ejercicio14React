@@ -10,18 +10,60 @@ import FormularioReceta from "./components/pages/recetas/FormularioReceta";
 import DetalleReceta from "./components/pages/recetas/DetalleReceta";
 import { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { v4 as uuidv4 } from "uuid";
 
 function App() {
   const usuarioLogueado =
-    JSON.parse(sessionStorage.getItem("userKeyReceta")) || false;
+    JSON.parse(sessionStorage.getItem("userKeyReceta")) || {};
   const [usuarioAdmin, setUsuarioAdmin] = useState(usuarioLogueado);
   const [recetas, setRecetas] = useState(() => {
     return JSON.parse(localStorage.getItem("catalogoRecetas")) || [];
   });
+
+  const crearReceta = (recetaNueva) => {
+    recetaNueva.id = uuidv4();
+    setRecetas([...recetas, recetaNueva]);
+    return true;
+  };
+
+  const borrarReceta = (idReceta) => {
+    const recetasFiltradas = recetas.filter(
+      (itemReceta) => itemReceta.id !== idReceta
+    );
+    setRecetas(recetasFiltradas);
+    return true;
+  };
+
+  const buscarReceta = (idReceta) => {
+    const recetaBuscada = recetas.find(
+      (itemReceta) => itemReceta.id === idReceta
+    );
+    return recetaBuscada;
+  };
+
+  const editarReceta = (idReceta, recetaActualizada) => {
+    const recetasEditadas = recetas.map((itemReceta) => {
+      if (itemReceta.id === idReceta) {
+        return {
+          ...itemReceta,
+          ...recetaActualizada,
+        };
+      } else {
+        return itemReceta;
+      }
+    });
+
+    setRecetas(recetasEditadas);
+
+    return true;
+  };
+
   useEffect(() => {
     localStorage.setItem("catalogoRecetas", JSON.stringify(recetas));
   }, [recetas]);
-  // se ejecuta en montaje
+  useEffect(() => {
+    sessionStorage.setItem("userKeyReceta", JSON.stringify(usuarioAdmin));
+  }, [usuarioAdmin]);
 
   return (
     <>
@@ -38,11 +80,11 @@ function App() {
               path="/login"
               element={<Login setUsuarioAdmin={setUsuarioAdmin}></Login>}
             ></Route>
-            
+
             {/* btn VER MAS */}
             <Route
               path="/detalle/:id"
-              element={<DetalleReceta recetas={recetas} />}
+              element={<DetalleReceta buscarReceta={buscarReceta} />}
             />
 
             <Route
@@ -55,6 +97,7 @@ function App() {
                   <Administrador
                     setRecetas={setRecetas}
                     recetas={recetas}
+                    borrarReceta={borrarReceta}
                   ></Administrador>
                 }
               ></Route>
@@ -63,8 +106,7 @@ function App() {
                 path="crear"
                 element={
                   <FormularioReceta
-                    recetas={recetas}
-                    setRecetas={setRecetas}
+                    crearReceta={crearReceta}
                     titulo={"Crear receta"}
                   ></FormularioReceta>
                 }
@@ -73,8 +115,8 @@ function App() {
                 path="editar/:id"
                 element={
                   <FormularioReceta
-                    recetas={recetas}
-                    setRecetas={setRecetas}
+                    buscarReceta={buscarReceta}
+                    editarReceta={editarReceta}
                     titulo={"Editar receta"}
                   ></FormularioReceta>
                 }
