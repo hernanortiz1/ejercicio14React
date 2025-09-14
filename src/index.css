@@ -53,6 +53,45 @@ main {
   object-fit: cover;
 }
 
+
+.fondoLogin {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #dcdcdc88;
+}
+
+.fondoContenedorDerechoLogin {
+  background: linear-gradient(135deg, #4a90e2, #a3bffa);
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fondoContenedorIzquierdoLogin {
+  background: #a4c0df;
+}
+
+.alineacionNavbar {
+  display: flex !important;
+  flex-direction: column; 
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .alineacionNavbar {
+    flex-direction: column !important;
+  }
+}
+
+
+@media (min-width: 992px) {
+  .alineacionNavbar {
+    flex-direction: row!important;
+  }
+}
+
 @media (max-width: 767px) {
   .titulo-carousel {
     font-size: 1.1rem;

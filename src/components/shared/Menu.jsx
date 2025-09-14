@@ -63,6 +63,7 @@ const Menu = ({ usuarioAdmin, setUsuarioAdmin }) => {
                 </Button>
               </>
             ) : (
+              <div className="alineacionNavbar">
               <NavLink
                 className="nav-link"
                 to={"/login"}
@@ -70,6 +71,16 @@ const Menu = ({ usuarioAdmin, setUsuarioAdmin }) => {
               >
                 Login
               </NavLink>
+              <NavLink
+                className="nav-link"
+                to={"/registro"}
+                onClick={() => setExpanded(false)}
+              >
+                Registrarme
+              </NavLink>
+              </div>
+              
+                
             )}
           </Nav>
         </Navbar.Collapse>

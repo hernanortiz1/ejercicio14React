@@ -86,3 +86,19 @@ export const login = async (datosUsuario) => {
     return null;
   }
 };
+
+export const registroUsuarios = async (nuevoUsuario) => {
+  try {
+    const respuesta = await fetch(urlusuarios, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(nuevoUsuario),
+    });
+    return respuesta;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};

@@ -11,6 +11,7 @@ import DetalleReceta from "./components/pages/recetas/DetalleReceta";
 import { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { v4 as uuidv4 } from "uuid";
+import RegistroUsuario from "./components/pages/RegistroUsuario";
 
 function App() {
   const usuarioLogueado =
@@ -79,6 +80,11 @@ function App() {
             <Route
               path="/login"
               element={<Login setUsuarioAdmin={setUsuarioAdmin}></Login>}
+            ></Route>
+
+            <Route
+              path="/registro"
+              element={<RegistroUsuario setUsuarioAdmin={setUsuarioAdmin}></RegistroUsuario>}
             ></Route>
 
             {/* btn VER MAS */}
