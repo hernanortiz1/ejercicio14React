@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import { leerReceta } from "../../helpers/queries";
 
 
-const Administrador = ({ recetas, setRecetas, borrarReceta }) => {
+const Administrador = ({ borrarReceta }) => {
  
 const [listaRecetas, setListaRecetas] = useState([])
 

@@ -1,21 +1,30 @@
-import { useParams, useNavigate } from "react-router";
+import { Link, useParams} from "react-router";
 import { Button, Card, Container } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import { obtenerRecetaPorID } from "../../../helpers/queries.js";
+
 
 const DetalleReceta = ({ recetas }) => {
   const { id } = useParams();
-  const navigate = useNavigate();
+  const [receta, setReceta] = useState({})
 
-  const receta = recetas.find((receta) => receta._id === id);
-  if (!receta) {
-    return (
-      <Container className="mt-5">
-        <h2>No se encontró la receta</h2>
-        <Button variant="secondary" onClick={() => navigate("/")}>
-          Volver
-        </Button>
-      </Container>
-    );
-  }
+  useEffect(
+    ()=>{
+      obtenerReceta()
+    },[]
+  )
+  const obtenerReceta = async () => {
+  const respuesta = await obtenerRecetaPorID(id)
+    if (respuesta.status ===200) {
+     
+      const respuesta = await obtenerRecetaPorID(id);
+
+      if (respuesta.status === 200) {
+        const recetaBuscada = await respuesta.json();
+        setReceta(recetaBuscada)
+      }
+    }
+  };
 
   return (
     <Container className="my-5">
@@ -35,9 +44,9 @@ const DetalleReceta = ({ recetas }) => {
             <strong>Descripción amplia:</strong> {receta.descripcion_amplia}
           </Card.Text>
           <div className="text-center d-grid gap-2 ">
-            <Button variant="primary" size="lg" onClick={() => navigate("/")}>
+            <Link variant="primary" size="lg" to={"/administrador"}>
               Volver
-            </Button>
+            </Link>
           </div>
         </Card.Body>
       </Card>

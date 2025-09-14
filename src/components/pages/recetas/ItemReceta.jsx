@@ -58,7 +58,7 @@ const ItemReceta = ({ receta, fila, setListaRecetas }) => {
         {/* BOTON EDITAR */}
         <Link
           variant="warning"
-          className="mb-2 me-md-2 mb-md-0"
+          className="mb-2 me-md-2 mb-md-0 btn btn-warning"
           to={"/administrador/editar/"+receta._id}
         >
           <i className="bi bi-pencil-square"></i>

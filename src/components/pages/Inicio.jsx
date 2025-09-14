@@ -1,14 +1,39 @@
-import { Container, Row, Carousel } from "react-bootstrap";
+import { Container, Row, Carousel, Form } from "react-bootstrap";
 import CardReceta from "./recetas/CardReceta";
+import { useState, useEffect } from "react";
+import { leerReceta } from "../../helpers/queries.js";
 import imagen1 from "../../assets/imgCarrouselInicio/img1.jpg";
 import imagen2 from "../../assets/imgCarrouselInicio/img2.jpg";
 import imagen3 from "../../assets/imgCarrouselInicio/img3.jpg";
 import imagen4 from "../../assets/imgCarrouselInicio/img4.jpg";
 import imagen5 from "../../assets/imgCarrouselInicio/img5.jpg";
-import { useState, useEffect } from "react";
-import { leerReceta } from "../../helpers/queries.js";
+
 
 const Inicio = () => {
+  const [terminoBusqueda, setTerminoBusqueda] = useState("");
+const [recetas, setRecetas] = useState([])
+  const handleInputChange = (e) => {
+    setTerminoBusqueda(e.target.value);
+  };
+useEffect(()=>{
+obtenerRecetas()
+},[])
+  const recetasFiltradas = recetas.filter((receta) =>
+    receta.nombreReceta
+      .toLowerCase()
+      .includes(terminoBusqueda.toLowerCase())
+  );
+ 
+const obtenerRecetas = async ()=>{
+  const respuesta = await leerReceta()
+  if(respuesta.status === 200){
+    const datos = await respuesta.json()
+    setRecetas(datos)
+  }else{
+    console.info("error al buscar recetas")
+  }
+}
+  
   return (
     <section className="mainSection">
 
@@ -88,13 +113,27 @@ const Inicio = () => {
       <Container className="mt-5">
         <h1 className="display-4">Nuestras recetas</h1>
         <hr />
+         <Form>
+          <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Label>Buscar receta</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Ingresa nombre de receta"
+              onChange={handleInputChange}
+              value={terminoBusqueda}
+            />
+          </Form.Group>
+        </Form>
         <Row>
-          {recetas.length === 0 ? (
-            <p>No hay recetas para mostrar.</p>
-          ) : (
-            recetas.map((receta, index) => (
-              <CardReceta key={index} receta={receta} />
+          {recetasFiltradas.length > 0 ? (
+           recetasFiltradas.map((receta) => (
+              <CardReceta key={receta._id} receta={receta} />
             ))
+           
+          ) : (
+            <p className="text-center my-5">
+              No se encontraron productos para mostrar
+            </p>
           )}
         </Row>
       </Container>
