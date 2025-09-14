@@ -113,7 +113,7 @@ const FormularioReceta = ({ recetas, setRecetas, titulo }) => {
               required: "La URL de imagen es obligatoria",
               pattern: {
                 value:
-                  /^https?:\/\/[\w\-]+(\.[\w\-]+)+[/#?]?.*\.(jpg|jpeg|png)$/,
+                  /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?(\.(jpg|jpeg|png))$/,
                 message: "Debe ser una URL válida de imagen (jpg, png, etc.)",
               },
             })}
@@ -180,7 +180,7 @@ const FormularioReceta = ({ recetas, setRecetas, titulo }) => {
                 message: "La descripción debe tener 10 caracteres como minimo ",
               },
               maxLength: {
-                value: 200,
+                value: 500,
                 message: "La descripción debe tener 200 caracteres como máximo",
               },
             })}
