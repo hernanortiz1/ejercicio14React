@@ -44,7 +44,7 @@ const DetalleReceta = ({ recetas }) => {
             <strong>Descripción amplia:</strong> {receta.descripcion_amplia}
           </Card.Text>
           <div className="text-center d-grid gap-2 ">
-            <Link variant="primary" size="lg" to={"/administrador"}>
+            <Link variant="primary" className="btn btn-primary" size="lg" to={"/administrador"}>
               Volver
             </Link>
           </div>
