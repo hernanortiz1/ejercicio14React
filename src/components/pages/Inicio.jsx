@@ -7,10 +7,13 @@ import imagen2 from "../../assets/imgCarrouselInicio/img2.jpg";
 import imagen3 from "../../assets/imgCarrouselInicio/img3.jpg";
 import imagen4 from "../../assets/imgCarrouselInicio/img4.jpg";
 import imagen5 from "../../assets/imgCarrouselInicio/img5.jpg";
+import { MoonLoader } from "react-spinners"; 
 
 const Inicio = () => {
   const [terminoBusqueda, setTerminoBusqueda] = useState("");
   const [recetas, setRecetas] = useState([]);
+   const [cargando, setCargando] = useState(true);
+  
   const handleInputChange = (e) => {
     setTerminoBusqueda(e.target.value);
   };
@@ -22,6 +25,7 @@ const Inicio = () => {
   );
 
   const obtenerRecetas = async () => {
+     setCargando(true); 
     const respuesta = await leerReceta();
     if (respuesta.status === 200) {
       const datos = await respuesta.json();
@@ -29,6 +33,7 @@ const Inicio = () => {
     } else {
       console.info("error al buscar recetas");
     }
+     setCargando(false);
   };
 
   return (
@@ -121,17 +126,25 @@ const Inicio = () => {
         </Form>
         <h1 className="display-4">Nuestras recetas</h1>
         <hr />
-        <Row>
-          {recetasFiltradas.length > 0 ? (
-            recetasFiltradas.map((receta) => (
-              <CardReceta key={receta._id} receta={receta} />
-            ))
-          ) : (
-            <p className="text-center my-5">
-              No se encontraron productos para mostrar
-            </p>
-          )}
-        </Row>
+        
+        
+        {cargando ? (
+          <div className="d-flex justify-content-center my-5">
+            <MoonLoader size={60} color="#3649d7ff" />
+          </div>
+        ) : (
+          <Row>
+            {recetasFiltradas.length > 0 ? (
+              recetasFiltradas.map((receta) => (
+                <CardReceta key={receta._id} receta={receta} />
+              ))
+            ) : (
+              <p className="text-center my-5">
+                No se encontraron productos para mostrar
+              </p>
+            )}
+          </Row>
+        )}
       </Container>
     </section>
   );

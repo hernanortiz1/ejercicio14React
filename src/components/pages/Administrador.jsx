@@ -4,25 +4,27 @@ import { Link, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import { useState, useEffect } from "react";
 import { leerReceta } from "../../helpers/queries";
-
+import { MoonLoader } from "react-spinners";
 
 const Administrador = ({ borrarReceta }) => {
- 
-const [listaRecetas, setListaRecetas] = useState([])
+  const [listaRecetas, setListaRecetas] = useState([]);
+  const [cargando, setCargando] = useState(true);
 
-useEffect(()=>{
-obtenerRecetas()
-},[])
+  useEffect(() => {
+    obtenerRecetas();
+  }, []);
 
-const obtenerRecetas = async ()=>{
-  const respuesta = await leerReceta()
-  if(respuesta.status === 200){
-    const datos = await respuesta.json()
-    setListaRecetas(datos)
-  }else{
-    console.info("error al buscar receta")
-  }
-}
+  const obtenerRecetas = async () => {
+     setCargando(true)
+    const respuesta = await leerReceta();
+    if (respuesta.status === 200) {
+      const datos = await respuesta.json();
+      setListaRecetas(datos);
+    } else {
+      console.info("error al buscar receta");
+    }
+     setCargando(false); 
+  };
 
   return (
     <section className="container mainSection">
@@ -35,28 +37,35 @@ const obtenerRecetas = async ()=>{
         </div>
       </div>
       <hr />
-      <Table responsive striped bordered hover>
-        <thead>
-          <tr className="text-center">
-            <th>Cod</th>
-            <th>Receta</th>
-            <th>URL de Imagen</th>
-            <th>Categoria</th>
-            <th>Opciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {listaRecetas.map((receta, indice) => (
-            <ItemReceta
-              key={receta._id}
-              receta={receta}
-              fila={indice + 1}
-              setListaRecetas={setListaRecetas}
-              borrarReceta={borrarReceta}
-            />
-          ))}
-        </tbody>
-      </Table>
+
+     {cargando ? (
+        <div className="d-flex justify-content-center my-5">
+          <MoonLoader size={60} color="#3649d7ff"  /> 
+        </div>
+      ) : (
+        <Table responsive striped bordered hover>
+          <thead>
+            <tr className="text-center">
+              <th>Cod</th>
+              <th>Receta</th>
+              <th>URL de Imagen</th>
+              <th>Categoria</th>
+              <th>Opciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {listaRecetas.map((receta, indice) => (
+              <ItemReceta
+                key={receta._id}
+                receta={receta}
+                fila={indice + 1}
+                setListaRecetas={setListaRecetas}
+                borrarReceta={borrarReceta}
+              />
+            ))}
+          </tbody>
+        </Table>
+      )}
     </section>
   );
 };
