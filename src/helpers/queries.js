@@ -96,7 +96,7 @@ export const registroUsuarios = async (nuevoUsuario) => {
       },
       body: JSON.stringify(nuevoUsuario),
     });
-   
+
     return respuesta;
   } catch (error) {
     console.error(error);
