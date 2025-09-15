@@ -1,30 +1,40 @@
-# 🍽️ Recetas CRUD con React
+# 🍽️ Recetas CRUD con React y Backend Node.js
 
-Aplicación web que permite **crear, listar, editar y eliminar recetas**, con autenticación de administrador, utilizando **React, React Router, React Bootstrap y localStorage**.
+Aplicación web que permite **crear, listar, editar y eliminar recetas**, con **autenticación de administrador** mediante login y registro.  
+Se utiliza un **backend en Node.js con Express y MongoDB** y un frontend en **React**.
 
 ---
 
 ## 🚀 Funcionalidades
 
-✅ Crear nuevas recetas con validaciones.  
-✅ Editar recetas existentes.  
-✅ Eliminar recetas con confirmación (SweetAlert2).  
-✅ Visualizar detalles de cada receta (Ver más).  
-✅ Carrusel de imágenes en la página de inicio.  
-✅ Login de administrador con sessionStorage.  
-✅ Persistencia de datos en localStorage.  
-✅ Totalmente responsiva con React Bootstrap.
+- ✅ **Registro de usuarios administradores** con validación de nombre, email y contraseña.  
+- ✅ **Login de administradores** con generación de token JWT y control de sesión mediante **sessionStorage**.  
+- ✅ **Crear nuevas recetas** enviando datos al backend.  
+- ✅ **Editar recetas existentes** consumiendo los endpoints correspondientes.  
+- ✅ **Eliminar recetas** con confirmación visual usando **SweetAlert2**.  
+- ✅ **Visualizar detalles de cada receta** mediante una vista "Ver más".  
+- ✅ **Carrusel de imágenes** en la página de inicio.  
+- ✅ **Persistencia de datos** en **localStorage** para las recetas y **sessionStorage** para el usuario logueado.  
+- ✅ **Diseño responsive** totalmente adaptativo con **React Bootstrap** y **Bootstrap 5**.
 
 ---
 
 ## 🛠️ Tecnologías utilizadas
 
-- **React 19**
-- **React Router DOM 7**
-- **React Bootstrap 2**
-- **Bootstrap 5**
-- **SweetAlert2**
-- **localStorage** y **sessionStorage**
+### Frontend
+
+- **React 19** – Librería principal para la construcción de la interfaz.  
+- **React Router DOM 7** – Gestión de rutas y navegación.  
+- **React Bootstrap 2** – Componentes pre-estilizados y responsive.  
+- **Bootstrap 5** – Estilos globales y utilidades CSS.  
+- **SweetAlert2** – Alertas visuales y confirmaciones.  
+
+### Backend
+
+- **Node.js + Express** – Servidor y rutas REST.  
+- **MongoDB + Mongoose** – Base de datos NoSQL para usuarios y recetas.  
+- **bcrypt** – Hash de contraseñas.  
+- **JWT** – Autenticación mediante tokens.  
 
 ---
 ## **🛠 Instalación y Ejecución**  
@@ -70,6 +80,8 @@ src/
 │   └── shared/
 │       ├── Footer.jsx
 │       └── Menu.jsx
+│   └── helpers/
+│       ├── quieres.js
 └── App.jsx
 ```
 
